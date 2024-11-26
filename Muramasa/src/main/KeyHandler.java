@@ -60,43 +60,45 @@ public class KeyHandler implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
 	
-		//title state
-		if(gp.gameState == gp.titleState) {
-			titleState(code);
-		}
-		
-		//play state
-		else if(gp.gameState == gp.playState) {
-			playState(code);
-		}
-		//pause state
-		else if(gp.gameState == gp.pauseState) {
-			pauseState(code);
-		}
-		
-		//dialogue state
-		else if(gp.gameState == gp.dialogueState || gp.gameState == gp.cutSceneState) {
-			dialogueState(code);
-		}
-		//character State
-		else if(gp.gameState == gp.characterState) {
-			characterState(code);
-		}
-		//option State
-		else if(gp.gameState == gp.optionState) {
-			optionState(code);
-		}
-		//game over state 
-		else if(gp.gameState == gp.gameOverState) {
-			gameOverState(code);
-		}
-		//trade state 
-		else if(gp.gameState == gp.tradeState) {
-			tradeState(code);
-		}
-		//map state 
-		else if(gp.gameState == gp.mapState) {
-			mapState(code);
+		if(gp.isLoading == false) {
+			//title state
+			if(gp.gameState == gp.titleState) {
+				titleState(code);
+			}
+			
+			//play state
+			else if(gp.gameState == gp.playState) {
+				playState(code);
+			}
+			//pause state
+			else if(gp.gameState == gp.pauseState) {
+				pauseState(code);
+			}
+			
+			//dialogue state
+			else if(gp.gameState == gp.dialogueState || gp.gameState == gp.cutSceneState) {
+				dialogueState(code);
+			}
+			//character State
+			else if(gp.gameState == gp.characterState) {
+				characterState(code);
+			}
+			//option State
+			else if(gp.gameState == gp.optionState) {
+				optionState(code);
+			}
+			//game over state 
+			else if(gp.gameState == gp.gameOverState) {
+				gameOverState(code);
+			}
+			//trade state 
+			else if(gp.gameState == gp.tradeState) {
+				tradeState(code);
+			}
+			//map state 
+			else if(gp.gameState == gp.mapState) {
+				mapState(code);
+			}
 		}
 	}
 
@@ -466,10 +468,16 @@ public class KeyHandler implements KeyListener {
 		}
 		if( gp.isLoading == true) {
 			if(gp.ui.commandNum == 0) {
-				gp.saveLoad.load();
-				gp.playMusic(23);
 				gp.eManage.lighting.dayCounter = 0;
 				gp.eManage.lighting.dayState = gp.eManage.lighting.day;
+				if(gp.currentMap < 4) {
+					gp.playMusic(0);
+				}else if(gp.currentMap < 5) {
+					gp.playMusic(19);
+				}else {
+					gp.playMusic(18);
+				}
+				gp.saveLoad.load();
 				gp.gameState = gp.playState;
 				
 			}else {				
@@ -477,6 +485,8 @@ public class KeyHandler implements KeyListener {
 				gp.ui.titleScreenState = 0;
 				gp.ui.commandNum = 0;
 				gp.resetGame();
+				gp.stopMusic();
+				gp.playMusic(26);
 			}
 			gp.isLoading = false;
 		}

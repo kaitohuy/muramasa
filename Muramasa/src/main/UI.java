@@ -88,6 +88,15 @@ public class UI {
 	    arial_80B = new Font("Arial", Font.BOLD, 80);
 	}
 	
+	public void resetCounter() {
+		
+		counter = 0;
+		counterSummon = 0;
+		soundSummon = false;
+		soundThunder = false;
+		endLine = false;
+	}
+	
 	private Font loadFont(String path) {
 		String tempPath = "/fonts/" + path + ".ttf";
 		try {
@@ -1413,6 +1422,8 @@ public class UI {
 				subState = 0;
 				gp.gameState = gp.titleState;
 				titleScreenState = 0;
+				gp.stopMusic();
+				gp.playMusic(26);
 				gp.saveLoad.save();
 				gp.inProgress = true;
 				gp.isLoading = false;

@@ -30,7 +30,7 @@ public class SaveLoad {
             boolean checkPlayerExists = checkPlayerExists(gp.player.playerId);
             if (checkPlayerExists == false) {
                 // Câu lệnh INSERT
-                playerSql = "INSERT INTO player (id, level, max_life, life, max_mana, mana, strength, exp, next_level_exp, coin, currentArmor, currentWeapon, currentBook, map_id, currentArea, worldX, worldY) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                playerSql = "INSERT INTO player (id, level, max_life, life, max_mana, mana, strength, exp, next_level_exp, coin, currentArmor, currentWeapon, currentBook, map_id, currentArea, worldX, worldY, skill1, skill2, skill3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 try (PreparedStatement playerStmt = conn.prepareStatement(playerSql, Statement.RETURN_GENERATED_KEYS)) {
                     // Gán tham số
                     playerStmt.setInt(1, gp.player.playerId); // Gán idaccount thay vì playerId
@@ -50,11 +50,14 @@ public class SaveLoad {
                     playerStmt.setInt(15, gp.currentArea);
                     playerStmt.setInt(16, gp.player.worldX);
                     playerStmt.setInt(17, gp.player.worldY);
+                    playerStmt.setBoolean(18, gp.player.canUseSkill1);
+                    playerStmt.setBoolean(19, gp.player.canUseSkill2);
+                    playerStmt.setBoolean(20, gp.player.canUseSkill3);
                     playerStmt.executeUpdate();
                 }
             } else {
                 // Câu lệnh UPDATE
-                playerSql = "UPDATE player SET level = ?, max_life = ?, life = ?, max_mana = ?, mana = ?, strength = ?, exp = ?, next_level_exp = ?, coin = ?, currentArmor = ?, currentWeapon = ?, currentBook = ?, map_id = ?, currentArea = ?, worldX = ?, worldY = ? WHERE id = ?";
+                playerSql = "UPDATE player SET level = ?, max_life = ?, life = ?, max_mana = ?, mana = ?, strength = ?, exp = ?, next_level_exp = ?, coin = ?, currentArmor = ?, currentWeapon = ?, currentBook = ?, map_id = ?, currentArea = ?, worldX = ?, worldY = ?, skill1 = ?, skill2 = ?, skill3 = ? WHERE id = ?";
                 try (PreparedStatement playerStmt = conn.prepareStatement(playerSql, Statement.RETURN_GENERATED_KEYS)) {
                     
                     playerStmt.setInt(1, gp.player.level);
@@ -73,7 +76,10 @@ public class SaveLoad {
                     playerStmt.setInt(14, gp.currentArea);
                     playerStmt.setInt(15, gp.player.worldX);
                     playerStmt.setInt(16, gp.player.worldY);
-                    playerStmt.setInt(17, gp.player.playerId);
+                    playerStmt.setBoolean(17, gp.player.canUseSkill1);
+                    playerStmt.setBoolean(18, gp.player.canUseSkill2);
+                    playerStmt.setBoolean(19, gp.player.canUseSkill3);
+                    playerStmt.setInt(20, gp.player.playerId);
                     playerStmt.executeUpdate();
                 }
             }
@@ -245,6 +251,9 @@ public class SaveLoad {
         	    gp.nextArea = playerRs.getInt("currentArea");
         	    gp.player.worldX = playerRs.getInt("worldX");
         	    gp.player.worldY = playerRs.getInt("worldY");
+        	    gp.player.canUseSkill1 = playerRs.getBoolean("skill1");
+        	    gp.player.canUseSkill2 = playerRs.getBoolean("skill2");
+        	    gp.player.canUseSkill3 = playerRs.getBoolean("skill3");
         	    
         	    gp.changeTileMap();
         	    gp.setWorld();

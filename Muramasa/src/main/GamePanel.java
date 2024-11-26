@@ -251,6 +251,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public void resetGame() {
 		
 		stopMusic();
+		ui.resetCounter();
 		removeTempEntity();
 		
 		for(int j = 0; j < maxMap; j++) {

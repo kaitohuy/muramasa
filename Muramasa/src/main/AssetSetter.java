@@ -355,7 +355,7 @@ import object.*;
 		switch (mapNum){
 			case 1: {
 				monIndex = 0;
-				
+	
 				setUpMonster(MON_GreenSlime.class, 6, 42);
 				setUpMonster(MON_GreenSlime.class, 8, 10);
 				setUpMonster(MON_GreenSlime.class, 17, 40);

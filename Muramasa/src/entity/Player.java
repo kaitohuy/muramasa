@@ -118,6 +118,9 @@ public class Player extends Entity {
 			}
 		}
 	
+		canUseSkill1 = false;
+		canUseSkill2 = false;
+		canUseSkill3 = false;
 		life = maxLife;
 		mana = maxMana;
 		speed = defaultSpeed;

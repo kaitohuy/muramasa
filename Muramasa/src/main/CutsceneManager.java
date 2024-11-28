@@ -52,6 +52,10 @@ public class CutsceneManager {
 				+ "TESTER\n"
 				+ "NGUYEN DOAN HUY\n"
 				+ "NGUYEN DOAN HUNG\n"
+				+ "\n"
+				+ "REPORTING SPECIALIST\n"
+				+ "NGUYEN DOAN HUY\n"
+				+ ""
 				+ "\n\n\n\n\n"
 				+ "Special Thanks\n"
 				+ "DAO MANH SON PROFESSOR\n"
@@ -60,7 +64,7 @@ public class CutsceneManager {
 				+ "ROAD TO HUMAN'S WORLD\n"
 				+ "IS COMING SOON...."
 				+ "\n\n\n"
-				+ "THANKS YOU FOR PLAYING!\n"
+				+ "THANKS FOR PLAYING!\n"
 				;
 	}
 	
@@ -292,7 +296,7 @@ public class CutsceneManager {
 					+ "Mọi thứ chỉ mới bắt đầu, câu chuyện về Kira còn tiếp diễn...\n";
 			drawString(alpha, 38f, 200, text, 70);
 			
-			if(counterReached(300) == true) {
+			if(counterReached(360) == true) {
 				gp.playMusic(0);
 				scenePhase++;
 			}

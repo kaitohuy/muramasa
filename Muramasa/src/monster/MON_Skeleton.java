@@ -103,6 +103,8 @@ public class MON_Skeleton extends Monster{
 	
 	public void checkDrop() {
 		
-		dropItem(new OBJ_Skull(gp));
+		if(gp.currentMap == 3) {
+			dropItem(new OBJ_Skull(gp));
+		}
 	}
 }

@@ -21,7 +21,7 @@ public class OBJ_House_Snow extends Entity{
 		down1 = image;
 		collision = true;
 		
-		setDefaultSolidArea(0, 0, eWidth, eHeight, 0, 0);
+		setDefaultSolidArea(48, 112, eWidth - 96, eHeight - 112, 0, 0);
 		
 	}
 

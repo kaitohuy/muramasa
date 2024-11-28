@@ -18,10 +18,11 @@ public class OBJ_Demon_Door extends Entity{
 		type = type_obstacle;
 		opened = false;
 		name = objName;
-		down1 = setup("/objects/door_close", eWidth, eHeight);
-		down2 = setup("/objects/door_open", eWidth, eHeight);
-		up1 = setup("/objects/door_open_2", eWidth, eHeight);
-		setDefaultSolidArea(0, 0, eWidth, eHeight, 0, 0);
+		image = setup("/objects/door_close", eWidth, eHeight);
+		image2 = setup("/objects/door_open", eWidth, eHeight);
+		image3 = setup("/objects/door_open_2", eWidth, eHeight);
+		down1 = image;
+		setDefaultSolidArea(48, 48, eWidth - 96, eHeight - 48, 0, 0);
 		collision = true;
 		
 		setDialogue();
@@ -54,7 +55,7 @@ public class OBJ_Demon_Door extends Entity{
 					}
 					startDialogue(this, 1);
 					gp.playSe(3);
-					down1 = down2;
+					down1 = image2;
 					opened = true;
 				}
 				else {
@@ -65,7 +66,7 @@ public class OBJ_Demon_Door extends Entity{
 			int skullIndex = gp.player.searchItemInventory("skull");
 			int boneIndex = gp.player.searchItemInventory("bone");
 			if(skullIndex != 999 && boneIndex != 999) {
-				down1 = up1;
+				down1 = image3;
 				setDefaultSolidArea(0, 0, 0, 0, 0, 0);
 				gp.player.inventory.remove(skullIndex);		
 				gp.player.inventory.remove(boneIndex);	

@@ -35,4 +35,6 @@ public static final String objName = "black door";
 		    attackRight[i] = setup(tempPath, eWidth, eHeight);
 	    }
 	}
+
+	
 }

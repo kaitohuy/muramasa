@@ -37,6 +37,7 @@ public class Main {
         window.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+            	gamepanel.gameState = gamepanel.pauseState;
                 // Hiển thị hộp thoại xác nhận
                 int confirm = JOptionPane.showConfirmDialog(
                         window,

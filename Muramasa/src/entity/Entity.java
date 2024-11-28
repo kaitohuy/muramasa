@@ -65,7 +65,7 @@ public class Entity {
 	public boolean drawing = true;
 	public boolean canAttack = true; // Cờ để kiểm tra xem có thể tấn công hay không
 	public boolean canUseSkill3 = false, canUseSkill2 = false, canUseSkill1 = false;
-	public boolean endPhase1 = false, startPhase2 = false, beingPhase = false;
+	public boolean endPhase1 = false, startPhase2 = false, beingPhase = false, confirmPhase2 = false;
 	
 	//counter
 	public int spriteCounter = 0;
@@ -367,10 +367,10 @@ public class Entity {
 		}
 
 		if(gp.ishigamiBattleOn == true) {
-			if(skill == 3) {
+			if(skill == 3 && frameIndex >= maxFrameAttack/2-1) {
 				summonMonster();
 				skill = 0;
-				attacking = false;
+//				attacking = false;
 			}
 		}
 	}
@@ -853,9 +853,6 @@ public class Entity {
 					}
 				}		
 			}
-			if(endPhase1 == true && startPhase2 == false) {
-				image = getDeadAnimation();
-			}
 			break;
 		case "down":
 			if(attacking == false) {
@@ -902,9 +899,6 @@ public class Entity {
 					}
 				}
 			}
-			if(endPhase1 == true && startPhase2 == false) {
-				image = getDeadAnimation();
-			}
 			break;
 		case "left":
 			if(attacking == false) {
@@ -922,7 +916,9 @@ public class Entity {
 						tempScreenY -= gp.tileSize*3;
 					}
 					else if(skill == 3) {
-						tempScreenX -= gp.tileSize*3;
+						if(frameIndex <= 3) {
+							tempScreenX += gp.tileSize*3;
+						}
 						tempScreenY -= 0;
 					}
 				}
@@ -930,9 +926,6 @@ public class Entity {
 					tempScreenX -= down1.getWidth();
 				}
 				image = getAttackLeft();	
-			}
-			if(endPhase1 == true && startPhase2 == false) {
-				image = getDeadAnimation();
 			}
 			break;
 		case "right":
@@ -957,13 +950,14 @@ public class Entity {
 				}
 				image = getAttackRight();						
 			}
-			if(endPhase1 == true && startPhase2 == false) {
-				image = getDeadAnimation();
-			}
 			break;
 		default:
 			image = getAttackRight();
 			break;
+		}
+
+		if(endPhase1 == true && startPhase2 == false) {
+			image = getDeadAnimation();
 		}
 
 		if(invincible == true) {
@@ -1011,12 +1005,12 @@ public class Entity {
 			}
 		}
 		
-//		g2.setColor(Color.red);
-//		g2.drawRect(tempScreenX + solidAreaDefaultX, tempScreenY + solidAreaDefaultY, solidArea.width, solidArea.height);
-//		g2.setColor(Color.green);
-//		if(image != null) {
-//			g2.drawRect(tempScreenX, tempScreenY, image.getWidth(), image.getHeight());
-//		}
+		g2.setColor(Color.red);
+		g2.drawRect(tempScreenX + solidAreaDefaultX, tempScreenY + solidAreaDefaultY, solidArea.width, solidArea.height);
+		g2.setColor(Color.green);
+		if(image != null) {
+			g2.drawRect(tempScreenX, tempScreenY, image.getWidth(), image.getHeight());
+		}
 	}
 
 	protected void dyingAnimation(Graphics2D g2) {

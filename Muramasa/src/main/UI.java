@@ -40,10 +40,10 @@ public class UI {
 	public Entity npc;
 	private int charIndex = 0;
 	private String combinaedText = "";
-	private int counterSummon = 0;
-	private boolean soundSummon = false;
-	private boolean soundThunder = false;
-	private boolean endLine = false;
+	public int counterSummon = 0;
+	public boolean soundSummon = false;
+	public boolean soundThunder = false;
+	public boolean endLine = false;
 	private UtilityTool uTool = new UtilityTool();
     private BufferedImage healthBarImage = null;
 	private BufferedImage lockSkill = null;
@@ -232,11 +232,11 @@ public class UI {
 	    
 	 // Vẽ nền màu xám trước cho thanh máu
 	    g2.setColor(new Color(50, 50, 50)); // Màu xám
-	    g2.fillRect(x + 72, y + 36, barWidth - 36, barHeight); // Vẽ thanh xám
+	    g2.fillRect(x + 78, y + 36, barWidth - 40, barHeight); // Vẽ thanh xám
 	    
 	    // Vẽ thanh năng lượng (mana)
 	    g2.setColor(new Color(0, 0, 255)); // Màu xanh cho thanh mana
-	    g2.fillRect(x + 72, y + 36, manaBarWidth - 36, barHeight); // Vẽ thanh mana
+	    g2.fillRect(x + 78, y + 36, manaBarWidth - 40, barHeight); // Vẽ thanh mana
 	    
 	    // Vẽ biểu tượng nhân vật
 	    g2.drawImage(healthBarImage, x, y, null);
@@ -1422,7 +1422,6 @@ public class UI {
 				subState = 0;
 				gp.gameState = gp.titleState;
 				titleScreenState = 0;
-				gp.stopMusic();
 				gp.playMusic(26);
 				gp.saveLoad.save();
 				gp.inProgress = true;
@@ -1432,7 +1431,6 @@ public class UI {
 				g2.drawString(">", textX - 24, textY);
 				if(gp.keyH.enterPressed == true) {
 					gp.isLoading = true;
-					
 				}
 			}
 		}
@@ -1460,7 +1458,7 @@ public class UI {
 			g2.setColor(new Color(0, 0, 0, counter*5));
 			g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 		}
-		if(counter > 50) {
+		if(counter > 50 && counter <= 60) {
 			g2.drawImage(transition, 0, 0, null);
 			if(gp.isLoading == false) {
 				gp.isLoading = true;
@@ -1674,8 +1672,8 @@ public class UI {
 		String text = "GAME PAUSED";
 		int x = getXForCenteredText(text);
 		int y = gp.screenHeight/2;
-		
-		g2.drawString(text, x, y);
+		drawSubWindow(x - gp.tileSize*2, y-gp.tileSize*3/2, gp.tileSize*14, gp.tileSize*2);
+		g2.drawString(text, x, y + 8);
 		 
 	}
 

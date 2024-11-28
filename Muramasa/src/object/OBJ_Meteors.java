@@ -19,8 +19,13 @@ public class OBJ_Meteors extends Projectile{
 		speed = 5;
 		maxLife = 90;
 		life = maxLife;
-		attack = 20;
-		useCost = 12;
+		if(gp.player != null) {
+			attack = 200 + (gp.player.level - 8) * 50;
+			useCost = gp.player.maxMana / 24;
+		}else {
+			attack = 200;
+			useCost = 12;
+		}
 		knockBackPower = 5;
 		maxFrameAttack = 6;
 		alive = false;

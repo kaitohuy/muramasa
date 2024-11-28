@@ -105,7 +105,9 @@ public class MON_Zombie_Fire extends Monster{
 	
 	public void checkDrop() {
 		
-		dropItem(new OBJ_Bone(gp));
+		if(gp.currentMap == 3) {
+			dropItem(new OBJ_Bone(gp));
+		}
 	}
 	
 }

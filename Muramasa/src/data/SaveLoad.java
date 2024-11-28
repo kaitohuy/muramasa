@@ -30,7 +30,7 @@ public class SaveLoad {
             boolean checkPlayerExists = checkPlayerExists(gp.player.playerId);
             if (checkPlayerExists == false) {
                 // Câu lệnh INSERT
-                playerSql = "INSERT INTO player (id, level, max_life, life, max_mana, mana, strength, exp, next_level_exp, coin, currentArmor, currentWeapon, currentBook, map_id, currentArea, worldX, worldY, skill1, skill2, skill3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                playerSql = "INSERT INTO player (id, level, max_life, life, max_mana, mana, strength, exp, next_level_exp, coin, currentArmor, currentWeapon, currentBook, map_id, currentArea, worldX, worldY, skill1, skill2, skill3, attack, defense) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 try (PreparedStatement playerStmt = conn.prepareStatement(playerSql, Statement.RETURN_GENERATED_KEYS)) {
                     // Gán tham số
                     playerStmt.setInt(1, gp.player.playerId); // Gán idaccount thay vì playerId
@@ -53,11 +53,13 @@ public class SaveLoad {
                     playerStmt.setBoolean(18, gp.player.canUseSkill1);
                     playerStmt.setBoolean(19, gp.player.canUseSkill2);
                     playerStmt.setBoolean(20, gp.player.canUseSkill3);
+                    playerStmt.setInt(21, gp.player.attack);
+                    playerStmt.setInt(22, gp.player.defense);
                     playerStmt.executeUpdate();
                 }
             } else {
                 // Câu lệnh UPDATE
-                playerSql = "UPDATE player SET level = ?, max_life = ?, life = ?, max_mana = ?, mana = ?, strength = ?, exp = ?, next_level_exp = ?, coin = ?, currentArmor = ?, currentWeapon = ?, currentBook = ?, map_id = ?, currentArea = ?, worldX = ?, worldY = ?, skill1 = ?, skill2 = ?, skill3 = ? WHERE id = ?";
+                playerSql = "UPDATE player SET level = ?, max_life = ?, life = ?, max_mana = ?, mana = ?, strength = ?, exp = ?, next_level_exp = ?, coin = ?, currentArmor = ?, currentWeapon = ?, currentBook = ?, map_id = ?, currentArea = ?, worldX = ?, worldY = ?, skill1 = ?, skill2 = ?, skill3 = ?, attack = ?, defense = ? WHERE id = ?";
                 try (PreparedStatement playerStmt = conn.prepareStatement(playerSql, Statement.RETURN_GENERATED_KEYS)) {
                     
                     playerStmt.setInt(1, gp.player.level);
@@ -79,7 +81,9 @@ public class SaveLoad {
                     playerStmt.setBoolean(17, gp.player.canUseSkill1);
                     playerStmt.setBoolean(18, gp.player.canUseSkill2);
                     playerStmt.setBoolean(19, gp.player.canUseSkill3);
-                    playerStmt.setInt(20, gp.player.playerId);
+                    playerStmt.setInt(20, gp.player.attack);
+                    playerStmt.setInt(21, gp.player.defense);
+                    playerStmt.setInt(22 , gp.player.playerId);
                     playerStmt.executeUpdate();
                 }
             }
@@ -91,19 +95,54 @@ public class SaveLoad {
                 deleteStmt.executeUpdate();
             }
             
-            String panelSql = "INSERT INTO gamepanel (id_panel, dragonBattleOn, defeatDragon, endSummon, endThunderSummon, afterSummon, endDialogue1, endDialogue2, endDialogue3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String panelSql = "INSERT INTO gamepanel (id_panel, dragonBattleOn, ishigamiBattleOn, endSummon, endThunderSummon, afterSummon, endDialogue1, endDialogue2, endDialogue3, orcDefeated, zombieWinterDefeated, dragonDefeated, ishigamiDefeated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement panelStmt = conn.prepareStatement(panelSql)) {
                 
                 panelStmt.setInt(1, gp.player.playerId);
                 panelStmt.setBoolean(2, gp.dragonBattleOn);
-                panelStmt.setBoolean(3, gp.defeatDragon);
+                panelStmt.setBoolean(3, gp.ishigamiBattleOn);
                 panelStmt.setBoolean(4, gp.endSummon);
                 panelStmt.setBoolean(5, gp.endThunderSummon);
                 panelStmt.setBoolean(6, gp.afterSummon);
                 panelStmt.setBoolean(7, gp.endDialogue1);
                 panelStmt.setBoolean(8, gp.endDialogue2);
                 panelStmt.setBoolean(9, gp.endDialogue3);
+                panelStmt.setBoolean(9, gp.endDialogue3);
+                panelStmt.setBoolean(10, Progress.orcDefeated);
+                panelStmt.setBoolean(11, Progress.zombieWinterDefeated);
+                panelStmt.setBoolean(12, Progress.dragonDefeated);
+                panelStmt.setBoolean(13, Progress.ishigamiDefeated);
                 panelStmt.executeUpdate();
+                
+            }
+            
+          //ui
+            String deleteUiSql = "DELETE FROM ui WHERE ui_id = ?";
+            try (PreparedStatement deleteStmt = conn.prepareStatement(deleteUiSql)) {
+                deleteStmt.setInt(1, gp.player.playerId);
+                deleteStmt.executeUpdate();
+            }
+            
+            String UiSql = "INSERT INTO ui (ui_id, counterSummon, soundSummon, soundThunder, endLine, canTouchEvent, trapRock, trapSpikeArrow, endDialogueMap1, endDialogueMap2, endDialogueMap3, endDialogueMap35, endDialogueMap4, endDialogueMap45, endGriffon) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            try (PreparedStatement uiStmt = conn.prepareStatement(UiSql)) {
+                
+                uiStmt.setInt(1, gp.player.playerId);
+                uiStmt.setInt(2, gp.ui.counterSummon);
+                uiStmt.setBoolean(3, gp.ui.soundSummon);
+                uiStmt.setBoolean(4, gp.ui.soundThunder);
+                uiStmt.setBoolean(5, gp.ui.endLine);
+                uiStmt.setBoolean(6, gp.eHandler.canTouchEvent);
+                uiStmt.setBoolean(7, gp.eHandler.trapRock);
+                uiStmt.setBoolean(8, gp.eHandler.trapSpikeArrow);
+                uiStmt.setBoolean(9, gp.eHandler.endDialogueMap1);
+                uiStmt.setBoolean(10, gp.eHandler.endDialogueMap2);
+                uiStmt.setBoolean(11, gp.eHandler.endDialogueMap3);
+                uiStmt.setBoolean(12, gp.eHandler.endDialogueMap35);
+                uiStmt.setBoolean(13, gp.eHandler.endDialogueMap4);
+                uiStmt.setBoolean(14, gp.eHandler.endDialogueMap45);
+                uiStmt.setBoolean(15, gp.eHandler.endGriffon);
+  
+                uiStmt.executeUpdate();
                 
             }
             
@@ -164,14 +203,14 @@ public class SaveLoad {
                 deleteStmt.executeUpdate();
             }
             
-            // Đặt lại sequence của objects_id về 1
+            // Đặt lại sequence của monster về 1
             String resetMonsterIdSql = "ALTER SEQUENCE monster_mon_id_seq RESTART WITH 1";
             try (Statement resetStmt = conn.createStatement()) {
                 resetStmt.executeUpdate(resetMonsterIdSql);
             }
             
             // Thêm mới map monster
-            String monstertSql = "INSERT INTO monster (map_id, mon_name, world_x, world_y, life, alive, player_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String monstertSql = "INSERT INTO monster (map_id, mon_name, world_x, world_y, life, alive, player_id, inRage, sleep, endPhase1, startPhase2, beingPhase, attack, defense, speed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement monStmt = conn.prepareStatement(monstertSql)) {
                 for (int mapNum = 0; mapNum < gp.maxMap; mapNum++) {
                     for (var mon : gp.monster[mapNum]) {
@@ -183,6 +222,14 @@ public class SaveLoad {
                         	monStmt.setInt(5, mon.life);
                         	monStmt.setBoolean(6, mon.alive);
                         	monStmt.setInt(7, gp.player.playerId);
+                        	monStmt.setBoolean(8, mon.inRage);
+                        	monStmt.setBoolean(9, mon.sleep);
+                        	monStmt.setBoolean(10, mon.endPhase1);
+                        	monStmt.setBoolean(11, mon.startPhase2);
+                        	monStmt.setBoolean(12, mon.beingPhase);
+                        	monStmt.setInt(13, mon.attack);
+                        	monStmt.setInt(14, mon.defense);
+                        	monStmt.setInt(15, mon.speed);
                         	monStmt.executeUpdate();
                         }
                     }
@@ -254,6 +301,8 @@ public class SaveLoad {
         	    gp.player.canUseSkill1 = playerRs.getBoolean("skill1");
         	    gp.player.canUseSkill2 = playerRs.getBoolean("skill2");
         	    gp.player.canUseSkill3 = playerRs.getBoolean("skill3");
+        	    gp.player.attack = playerRs.getInt("attack");
+        	    gp.player.defense = playerRs.getInt("defense");
         	    
         	    gp.changeTileMap();
         	    gp.setWorld();
@@ -278,24 +327,68 @@ public class SaveLoad {
         	if(panelRs.next()) {
               
                 gp.dragonBattleOn = panelRs.getBoolean("dragonBattleOn");
-                gp.defeatDragon = panelRs.getBoolean("defeatDragon");
+                gp.ishigamiBattleOn = panelRs.getBoolean("ishigamiBattleOn");
                 gp.endSummon = panelRs.getBoolean("endSummon");
                 gp.endThunderSummon = panelRs.getBoolean("endThunderSummon");
                 gp.afterSummon = panelRs.getBoolean("afterSummon");
                 gp.endDialogue1 = panelRs.getBoolean("endDialogue1");
                 gp.endDialogue2 = panelRs.getBoolean("endDialogue2");
                 gp.endDialogue3 = panelRs.getBoolean("endDialogue3");
+                Progress.orcDefeated = panelRs.getBoolean("orcDefeated");
+                Progress.zombieWinterDefeated = panelRs.getBoolean("zombieWinterDefeated");
+                Progress.dragonDefeated = panelRs.getBoolean("dragonDefeated");
+                Progress.ishigamiDefeated = panelRs.getBoolean("ishigamiDefeated");
                 
         	}
         	
+        	//gamePanel
+        	String uiSql = "SELECT * FROM ui WHERE ui_id = ?;";
+        	PreparedStatement uiStmt = conn.prepareStatement(uiSql);
+        	uiStmt.setInt(1, gp.player.playerId);
+        	ResultSet uiRs = uiStmt.executeQuery();
+        	if(uiRs.next()) {
+              
+                gp.ui.counterSummon = uiRs.getInt("counterSummon");
+                gp.ui.soundSummon = uiRs.getBoolean("soundSummon");
+                gp.ui.soundThunder = uiRs.getBoolean("soundThunder");
+                gp.ui.endLine = uiRs.getBoolean("endLine");
+                gp.eHandler.canTouchEvent = uiRs.getBoolean("canTouchEvent");
+                gp.eHandler.trapRock = uiRs.getBoolean("trapRock");
+                gp.eHandler.trapSpikeArrow = uiRs.getBoolean("trapSpikeArrow");
+                gp.eHandler.endDialogueMap1 = uiRs.getBoolean("endDialogueMap1");
+                gp.eHandler.endDialogueMap2 = uiRs.getBoolean("endDialogueMap2");
+                gp.eHandler.endDialogueMap3 = uiRs.getBoolean("endDialogueMap3");
+                gp.eHandler.endDialogueMap35 = uiRs.getBoolean("endDialogueMap35");
+                gp.eHandler.endDialogueMap4 = uiRs.getBoolean("endDialogueMap4");
+                gp.eHandler.endDialogueMap45 = uiRs.getBoolean("endDialogueMap45");
+                gp.eHandler.endGriffon = uiRs.getBoolean("endGriffon");
+                               
+        	}
+        	
             // Đọc thông tin đối tượng bản đồ
-        	String mapObjectSql = "SELECT map_id, object_id, object_name, world_x, world_y, loot_name, opened FROM map_objects WHERE player_id = ?";
+        	String mapObjectSql = "SELECT map_id, object_id, object_name, world_x, world_y, loot_name, opened FROM map_objects WHERE player_id = ? ORDER BY object_id;";
         	PreparedStatement mapStmt = conn.prepareStatement(mapObjectSql);
         	mapStmt.setInt(1, gp.player.playerId);
         	ResultSet mapRs = mapStmt.executeQuery();
+        	
+        	int previousMapId = 0; 
+        	int countObjectMap = 0;
+        	int countRow = 0;
+        	int numRap = -1;
+        	
         	while (mapRs.next()) {
         	    int mapNum = mapRs.getInt("map_id");
-        	    int index = mapRs.getInt("object_id") - 1;
+        	    
+        	    if (mapNum != previousMapId) {
+        	        previousMapId = mapNum;
+        	        countRow += countObjectMap;   
+        	        countObjectMap = 0;
+        	        numRap++;
+        	    } else {
+        	    	countObjectMap++;
+        	    }
+        	    
+        	    int index = mapRs.getInt("object_id") - 1 - countRow - numRap;
 
         	    if (mapNum < gp.maxMap && index < gp.obj[mapNum].length && !mapRs.getString("object_name").equals("NA")) {
         	        Entity obj = gp.eGenerator.getObject(mapRs.getString("object_name"));
@@ -316,13 +409,30 @@ public class SaveLoad {
         	}
         	
         	//doc thong tin monster
-        	String monsterSql = "SELECT map_id, mon_id, mon_name, world_x, world_y, life, alive FROM monster WHERE player_id = ?";
+        	String monsterSql = "SELECT * FROM monster WHERE player_id = ? ORDER BY mon_id;";
         	PreparedStatement monStmt = conn.prepareStatement(monsterSql);
         	monStmt.setInt(1, gp.player.playerId);
         	ResultSet monRs = monStmt.executeQuery();
+        	
+        	previousMapId = 0; 
+        	countObjectMap = 0;
+        	countRow = 0;
+        	numRap = -1;
+        	
         	while (monRs.next()) {
+        		
         	    int mapNum = monRs.getInt("map_id");
-        	    int index = monRs.getInt("mon_id")-1 ;
+        	    
+        	    if (mapNum != previousMapId) {
+        	        previousMapId = mapNum;
+        	        countRow += countObjectMap;   
+        	        countObjectMap = 0;
+        	        numRap++;
+        	    } else {
+        	    	countObjectMap++;
+        	    }
+
+        	    int index = monRs.getInt("mon_id")- 1 - countRow - numRap;
 
         	    if (mapNum < gp.maxMap && index < gp.monster[mapNum].length && !monRs.getString("mon_name").equals("NA")) {
         	        Entity mon = gp.eGenerator.getMonster(monRs.getString("mon_name"));
@@ -332,11 +442,21 @@ public class SaveLoad {
         	            mon.worldY = monRs.getInt("world_y");
         	            mon.life = monRs.getInt("life");
         	            mon.alive = monRs.getBoolean("alive");
+        	            mon.inRage = monRs.getBoolean("inRage");
+        	            mon.sleep = monRs.getBoolean("sleep");
+        	            mon.endPhase1 = monRs.getBoolean("endPhase1");
+        	            mon.startPhase2 = monRs.getBoolean("startPhase2");
+        	            mon.beingPhase = monRs.getBoolean("beingPhase");
+        	            mon.attack = monRs.getInt("attack");
+        	            mon.defense = monRs.getInt("defense");
+        	            mon.speed = monRs.getInt("speed");
         	            gp.monster[mapNum][index] = mon;
+        	            
         	        }
         	    }
         	}
 
+        	
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -455,6 +575,7 @@ public class SaveLoad {
     
     public void reset() {
     	String deleteGamepanel = "DELETE FROM gamepanel WHERE id_panel = ?";
+    	String deleteUi = "DELETE FROM ui WHERE ui_id = ?";
         String deleteInventory = "DELETE FROM inventory WHERE player_id = ?";
         String deleteObjects = "DELETE FROM map_objects WHERE player_id = ?";
         String deleteMonsters = "DELETE FROM monster WHERE player_id = ?";
@@ -464,6 +585,7 @@ public class SaveLoad {
             conn.setAutoCommit(false); // Bắt đầu giao dịch
 
             try (PreparedStatement gamepanelStmt = conn.prepareStatement(deleteGamepanel);
+            	 PreparedStatement uiStmt = conn.prepareStatement(deleteUi);
             	 PreparedStatement inventoryStmt = conn.prepareStatement(deleteInventory);
                  PreparedStatement objectsStmt = conn.prepareStatement(deleteObjects);
                  PreparedStatement monstersStmt = conn.prepareStatement(deleteMonsters);
@@ -474,6 +596,9 @@ public class SaveLoad {
             	
             	gamepanelStmt.setInt(1, gp.player.playerId);
             	gamepanelStmt.executeUpdate();
+            	
+            	uiStmt.setInt(1, gp.player.playerId);
+            	uiStmt.executeUpdate();
             	
                 inventoryStmt.setInt(1, gp.player.playerId);
                 inventoryStmt.executeUpdate();

@@ -18,7 +18,7 @@ public class OBJ_Util extends Projectile{
 		speed = 0;
 		maxLife = 90;
 		life = maxLife;
-		attack = 30;
+		attack = 50;
 		useCost = 10;
 		knockBackPower = 5;
 		alive = false;

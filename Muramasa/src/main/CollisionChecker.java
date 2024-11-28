@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entity.Entity;
+import entity.Player;
 
 public class CollisionChecker {
 	
@@ -188,8 +189,17 @@ public class CollisionChecker {
 				
 				if(entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {
 					if(target[gp.currentMap][i] != entity) {
-						entity.collisionOn = true;
-						index.add(i);
+						
+						if(entity == gp.player && target[gp.currentMap][i].name.equals("ishigami") && target[gp.currentMap][i].inRage == true) {
+							System.out.println("hihi");
+							if(target[gp.currentMap][i].attacking == false) {
+								entity.collisionOn = true;
+								index.add(i);
+							}
+						}else {
+							entity.collisionOn = true;
+							index.add(i);
+						}
 					}
 				}
 				

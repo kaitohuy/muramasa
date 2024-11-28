@@ -21,6 +21,7 @@ public class OBJ_Bridge_Horizontal extends Bridge{
 		down1 = image;
 		collision = false;
 		
+		setDefaultSolidArea(0, 0, eWidth, eHeight, 0, 0);
 	}
 
 }

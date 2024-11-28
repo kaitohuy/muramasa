@@ -21,5 +21,6 @@ public class OBJ_Skull extends Entity{
 		description = "[" + name + "]\nDùng để mở cổng tới\nchỗ dragon.";
 
 		price = 20;
+		stackable = true;
 	}
 }

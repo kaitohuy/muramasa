@@ -213,10 +213,18 @@ public class KeyHandler implements KeyListener {
 				gp.isLoading = false;
 			}
 			else if(gp.ui.commandNum == 1 && gp.isLoading == true) {
-				gp.newGame = false;
+				gp.stopMusic();
+				gp.newGame = true;
 				gp.saveLoad.load();
+				gp.resetImage = true;
 				gp.gameState = gp.playState;
-				gp.playMusic(23);
+				if(gp.currentMap < 4) {
+					gp.playMusic(0);
+				}else if(gp.currentMap < 5) {
+					gp.playMusic(19);
+				}else {
+					gp.playMusic(18);
+				}
 				gp.isLoading = false;
 			}
 			
@@ -477,15 +485,16 @@ public class KeyHandler implements KeyListener {
 				}else {
 					gp.playMusic(18);
 				}
+				gp.removeTempEntity();
 				gp.saveLoad.load();
+				gp.resetImage = true;
 				gp.gameState = gp.playState;
 				
 			}else {				
 				gp.gameState = gp.titleState;
 				gp.ui.titleScreenState = 0;
 				gp.ui.commandNum = 0;
-				gp.resetGame();
-				gp.stopMusic();
+				gp.inProgress = true;
 				gp.playMusic(26);
 			}
 			gp.isLoading = false;

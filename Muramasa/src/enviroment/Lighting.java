@@ -146,13 +146,14 @@ public class Lighting {
 		//debug
 		String situation = "";
 		switch(dayState) {
-		case day: situation = "day"; break;
-		case dusk: situation = "dusk"; break;
-		case night: situation = "night"; break;
-		case dawn: situation = "dawn"; break;
+		case day: situation = "12:00"; break;
+		case dusk: situation = "18:00"; break;
+		case night: situation = "24:00"; break;
+		case dawn: situation = "06:00"; break;
 		}
 		g2.setColor(Color.white);
-		g2.setFont(g2.getFont().deriveFont(40f));
-		g2.drawString(situation, 800, 500);
+		g2.setFont(gp.ui.VT323.deriveFont(40f));
+		gp.ui.drawSubWindow(gp.tileSize*17 + 40, 18, gp.tileSize*2 , gp.tileSize + 12);
+		g2.drawString(situation, gp.tileSize*18, gp.tileSize + 12);
 	}
 }

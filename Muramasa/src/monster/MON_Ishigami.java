@@ -1,6 +1,7 @@
 package monster;
 
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 import java.util.Random;
 import data.Progress;
 import entity.Monster;
@@ -13,16 +14,16 @@ public class MON_Ishigami extends Monster{
 	GamePanel gp;
 	public static final String monName  ="ishigami";
 	private int numRange = 0;
-	private BufferedImage[] attackUpSkill1 = new BufferedImage[28];
-	private BufferedImage[] attackDownSkill1 = new BufferedImage[28];
-	private BufferedImage[] attackLeftSkill1 = new BufferedImage[28];
-	private BufferedImage[] attackRightSkill1 = new BufferedImage[28];
-	private BufferedImage[] attackLeftSkill2 = new BufferedImage[28];
-	private BufferedImage[] attackRightSkill2 = new BufferedImage[28];
-	private BufferedImage[] attackUpSkill3 = new BufferedImage[28];
-	private BufferedImage[] attackDownSkill3 = new BufferedImage[28];
-	private BufferedImage[] attackLeftSkill3 = new BufferedImage[28];
-	private BufferedImage[] attackRightSkill3 = new BufferedImage[28];
+	private BufferedImage[] attackUpSkill1 = new BufferedImage[12];
+	private BufferedImage[] attackDownSkill1 = new BufferedImage[12];
+	private BufferedImage[] attackLeftSkill1 = new BufferedImage[12];
+	private BufferedImage[] attackRightSkill1 = new BufferedImage[12];
+	private BufferedImage[] attackLeftSkill2 = new BufferedImage[11];
+	private BufferedImage[] attackRightSkill2 = new BufferedImage[11];
+	private BufferedImage[] attackUpSkill3 = new BufferedImage[8];
+	private BufferedImage[] attackDownSkill3 = new BufferedImage[8];
+	private BufferedImage[] attackLeftSkill3 = new BufferedImage[8];
+	private BufferedImage[] attackRightSkill3 = new BufferedImage[8];
 	
 	public MON_Ishigami(GamePanel gp) {
 		super(gp);
@@ -47,9 +48,14 @@ public class MON_Ishigami extends Monster{
 		numOfDirecion = 2;
 		numRange = 4;
 		setDefaultSolidArea(124, 96, 96, 160, 112, 112);
-		getImage();
 		setDialogue();
-		getAttackImage();
+		if(inRage == false) {
+			getAttackImage();
+		}else {
+			System.out.println("hoho");
+			getAttackImagePhase2();
+		}
+		getImage();
 	}
 	
 	public void getImage() {
@@ -83,11 +89,11 @@ public class MON_Ishigami extends Monster{
 		}else if(direction.equals("left") || gp.player.worldX < worldX) {
 			path = "left";
 		}
-		
 		for (int i = 0; i < 19; i++) {
 	    	String tempPath = "/monster/ishigami_death_" + path + "_" + i;
 	    	dead[i] = setup(tempPath, gp.tileSize*7, gp.tileSize*7);
 	    }
+
 	}
 	
 	public void getAttackImage() {
@@ -124,6 +130,15 @@ public class MON_Ishigami extends Monster{
 	}
 	
 	public void getAttackImagePhase2() {
+		
+		Arrays.fill(attackLeftSkill1, null);
+		Arrays.fill(attackRightSkill1, null);
+		Arrays.fill(attackLeftSkill3, null);
+		Arrays.fill(attackRightSkill3, null);
+		Arrays.fill(attackUp, null);
+		Arrays.fill(attackDown, null);
+		Arrays.fill(attackLeft, null);
+		Arrays.fill(attackRight, null);
 		
 		//attack
 		for (int i = 0; i < 12; i++) {
@@ -177,8 +192,8 @@ public class MON_Ishigami extends Monster{
 		dialogues[0][4] = "Ishigami: Nhiệm vụ dẫn hắn đến đây đã hoàn thành, đến\nlúc ngươi biến mất được rồi đó!";
 		
 		dialogues[1][0] = "Ishigami: Ta công nhận ngươi thật sự rất mạnh, ta không\nnhớ đã bao lâu rồi mới phải dùng đến hình dạng này\nnữa.";
-		dialogues[1][1] = "Ishigami: Dù ngày hôm nay ngươi có chết cũng đừng nản\nkhông có mấy ai đủ khả năng khiến ta ra nông nỗi này\nđâu";
-		dialogues[1][2] = "Ishigami: Hãy tiếp tục trận chiến nào! Ta sẽ không nương\ntay nữa đâu";
+		dialogues[1][1] = "Ishigami: Dù ngày hôm nay ngươi có chết cũng đừng nản\nchí, không có mấy ai đủ khả năng khiến ta ra nông nỗi\nnày đâu";
+		dialogues[1][2] = "Ishigami: Hãy tiếp tục trận chiến nào! Ta sẽ không nương\ntay nữa, đến lúc cho ngươi thấy chiêu thức ta đã tu\nluyện suốt thời gian qua rồi!";
 	}
 	
 	public void setAction() {
@@ -208,6 +223,14 @@ public class MON_Ishigami extends Monster{
 			setDefaultSolidArea(144, 0, 96, 144, 90, 90);
 			startDialogue(this, 1);
 		}
+		
+		if(gp.resetImage == true && inRage == true) {
+			numOfDirecion = 4;
+			getAttackImagePhase2();
+			getImage();
+			gp.resetImage = false;
+		}
+		
 		if(endPhase1 == false || startPhase2 == true) {
 
 			if(getTileDistance(gp.player) < 15) {
@@ -254,6 +277,7 @@ public class MON_Ishigami extends Monster{
 						skill = nextSkill;
 						if(inRage == false) {
 							if(nextSkill == 1) {
+								
 								System.arraycopy(attackRightSkill1, 0, attackRight, 0, attackRightSkill1.length);
 								System.arraycopy(attackLeftSkill1, 0, attackLeft, 0, attackLeftSkill1.length);
 								
@@ -274,7 +298,7 @@ public class MON_Ishigami extends Monster{
 					}
 				}
 			}
-			if(skillSummonCounter == 3600) {
+			if(skillSummonCounter == 2400) {
 				nextSkill = 3;
 				maxFrameAttack = 8;
 				attacking = true;
@@ -282,10 +306,12 @@ public class MON_Ishigami extends Monster{
 					skill = nextSkill;
 					if(inRage == false) {
 						if(nextSkill == 3) {
+							
 							System.arraycopy(attackRightSkill3, 0, attackRight, 0, attackRightSkill3.length);
 							System.arraycopy(attackLeftSkill3, 0, attackLeft, 0, attackLeftSkill3.length);
 						}
 					}else {
+						
 						System.arraycopy(attackUpSkill3, 0, attackUp, 0, attackUpSkill3.length);
 						System.arraycopy(attackDownSkill3, 0, attackDown, 0, attackDownSkill3.length);
 						System.arraycopy(attackRightSkill3, 0, attackRight, 0, attackRightSkill3.length);

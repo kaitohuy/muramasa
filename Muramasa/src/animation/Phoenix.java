@@ -37,6 +37,7 @@ public class Phoenix extends Animation{
         		Projectile projectile;
             	projectile = new OBJ_Meteors(gp);
             	projectile.set(aScreenX + gp.player.worldX - gp.player.screenX - 90, aScreenY + gp.player.worldY - gp.player.screenY, "down", true, gp.player);
+            	projectile.subtractResource(gp.player);
     			for(int i = 0; i < gp.projectile[gp.currentMap].length; i++) {
     				if(gp.projectile[gp.currentMap][i] == null) {
     					gp.projectile[gp.currentMap][i] = projectile;

@@ -100,7 +100,9 @@ public class MON_Orc extends Monster{
 	}
 	
 	public void checkDrop() {
-		Progress.orcDefeated = true;
-		dropItem(new OBJ_Key(gp));
+		if(gp.currentMap == 1) {
+			Progress.orcDefeated = true;
+			dropItem(new OBJ_Key(gp));
+		}
 	}
 }

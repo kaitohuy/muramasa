@@ -19,7 +19,7 @@ public class OBJ_Spike_Arrow extends Projectile{
 		eHeight = gp.tileSize*3;
 		name = objName;
 		speed = 4;
-		maxLife = 120;
+		maxLife = 150;
 		life = maxLife;
 		attack = 250;
 		useCost = 1;

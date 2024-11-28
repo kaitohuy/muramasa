@@ -90,9 +90,9 @@ public class GamePanel extends JPanel implements Runnable{
 	public Thunder aThunder = new Thunder(this);
 	public Loading loading = new Loading(this);
 	public Player player = new Player(this, keyH);
-	public Entity obj[][] = new Entity[maxMap][200];
+	public Entity obj[][] = new Entity[maxMap][150];
 	public Entity npc[][] = new Entity[maxMap][10];
-	public Entity monster[][] = new Entity[maxMap][50];
+	public Entity monster[][] = new Entity[maxMap][30];
 	public Entity projectile[][] = new Entity[maxMap][20];
 	//public ArrayList<Entity> projectileList = new ArrayList<>();
 	public ArrayList<Entity> particleList = new ArrayList<>();
@@ -120,7 +120,6 @@ public class GamePanel extends JPanel implements Runnable{
 	//others
 	public boolean dragonBattleOn = false;	
 	public boolean ishigamiBattleOn = false;	
-	public boolean defeatDragon = false;
 	public boolean endSummon = false;
 	public boolean endThunderSummon = false;
 	public boolean afterSummon = false;
@@ -131,7 +130,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public boolean newGame = true;
 	public boolean inProgress = false;
 	public boolean isLoading = false;
-	public boolean allowed = false;
+	public boolean resetImage = false;
 	
 	//area
 	public int previousMap;
@@ -211,6 +210,8 @@ public class GamePanel extends JPanel implements Runnable{
 			if(newGame == true) {
 				aSetter.setMonster();
 				aSetter.setObject();
+			}else {
+				newGame = true;
 			}
 			setWorld = false;
 		}
@@ -252,6 +253,7 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		stopMusic();
 		ui.resetCounter();
+		eHandler.resetCounter();
 		removeTempEntity();
 		
 		for(int j = 0; j < maxMap; j++) {
@@ -261,9 +263,26 @@ public class GamePanel extends JPanel implements Runnable{
 				}
 			}
 		}
+		for(int j = 0; j < maxMap; j++) {
+			for(int i = 0; i < obj[j].length; i++) {
+				if(obj[j][i] != null) {
+					obj[j][i] = null;
+				}
+			}
+		}
+		for(int j = 0; j < maxMap; j++) {
+			for(int i = 0; i < monster[j].length; i++) {
+				if(monster[j][i] != null) {
+					monster[j][i] = null;
+				}
+			}
+		}
+		Progress.dragonDefeated = false;
+		Progress.ishigamiDefeated = false;
+		Progress.orcDefeated = false;
+		Progress.zombieWinterDefeated = false;
 		dragonBattleOn = false;	
 		ishigamiBattleOn = false;	
-		defeatDragon = false;
 		endSummon = false;
 		endThunderSummon = false;
 		afterSummon = false;
@@ -499,10 +518,6 @@ public class GamePanel extends JPanel implements Runnable{
 			Collections.sort(entityList, new Comparator<Entity>() {
 			    @Override
 			    public int compare(Entity e1, Entity e2) {
-			        if (e1 == null || e2 == null) {
-			            throw new IllegalArgumentException("Entities cannot be null.");
-			        }
-
 			        // Case 1: OBJ_Stone luôn trên cùng
 			        if (e1 instanceof OBJ_Stone && !(e2 instanceof OBJ_Stone)) {
 			            return -1;
@@ -512,20 +527,27 @@ public class GamePanel extends JPanel implements Runnable{
 			        }
 
 			        // Case 2: Tree vs Player/NPC/Monster/Projectile
-			        if ((e1 instanceof Player || e1 instanceof NPC || e1 instanceof Monster || e1 instanceof Projectile) && e2 instanceof Tree) {
+			        if (!(e1 instanceof Tree) && e2 instanceof Tree) {
 			            return Integer.compare(e1.worldY, e2.worldY + tileSize * 3 - 12);
 			        }
-			        if ((e2 instanceof Player || e2 instanceof NPC || e2 instanceof Monster || e2 instanceof Projectile) && e1 instanceof Tree) {
+			        if (e1 instanceof Tree && !(e2 instanceof Tree)) {
 			            return Integer.compare(e1.worldY + tileSize * 3 - 12, e2.worldY);
 			        }
 
 			        // Case 3: Bridge vs Player/NPC/Monster/Projectile
-			        if ((e1 instanceof Player || e1 instanceof NPC || e1 instanceof Monster || e1 instanceof Projectile) && e2 instanceof Bridge) {
-			            return 1; // Player luôn trên Bridge
+			        if (!(e1 instanceof Bridge) && e2 instanceof Bridge) {
+			        	 return Integer.compare(e1.worldY + tileSize * 2, e2.worldY);
 			        }
-			        if ((e2 instanceof Player || e2 instanceof NPC || e2 instanceof Monster || e2 instanceof Projectile) && e1 instanceof Bridge) {
-			            return -1; // Bridge luôn dưới Player
+			        if (e1 instanceof Bridge && !(e2 instanceof Bridge)) {
+			        	 return Integer.compare(e1.worldY, e2.worldY + tileSize * 2);
 			        }
+			        
+//			        if(e1 instanceof Player && e2 instanceof Monster) {
+//			        	return Integer.compare(e1.worldY, e2.worldY);
+//			        }
+//			        if(e2 instanceof Player && e1 instanceof Monster) {
+//			        	return Integer.compare(e1.worldY, e2.worldY);
+//			        }
 
 			        // Case 4: General worldY comparison
 					return Integer.compare(e1.worldY, e2.worldY);
@@ -569,6 +591,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	public void playMusic(int i) {
 		
+		stopMusic();
 		music.setFile(i);
 		music.play();
 		music.loop();

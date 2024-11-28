@@ -103,7 +103,11 @@ public class MON_Zombie_Winter extends Monster{
 	}
 	
 	public void checkDrop() {
-		Progress.zombieWinterDefeated = true;
-		dropItem(new OBJ_Key(gp));
+		if(gp.currentMap == 2) {
+			Progress.zombieWinterDefeated = true;
+			dropItem(new OBJ_Key(gp));
+		}else {
+			System.out.println("hehe");
+		}
 	}
 }

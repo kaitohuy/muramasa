@@ -1,5 +1,6 @@
 package object;
 
+import data.Progress;
 import entity.Entity;
 import main.GamePanel;
 
@@ -34,7 +35,7 @@ public class OBJ_Gate_Dungeon extends Entity{
 	}
 	
 	public void interact() {
-		if(gp.defeatDragon == false) {
+		if(Progress.dragonDefeated == false) {
 			startDialogue(this, 1);
 			
 		}else {

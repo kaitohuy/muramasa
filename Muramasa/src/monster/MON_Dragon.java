@@ -92,10 +92,6 @@ public class MON_Dragon extends Monster{
 			projectile.attack = 220;
 		}
 		
-		if(life <= 0) {
-			gp.defeatDragon = true;
-		}
-		
 		if(getTileDistance(gp.player) < 10) {
 			moveTowardPlayer(30);
 		} 

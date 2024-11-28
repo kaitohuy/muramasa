@@ -15,14 +15,14 @@ public class EventHandler{
 	Projectile projectile;
 	
 	int previousEventX, previousEventY;
-	boolean canTouchEvent = true;
-	boolean trapRock = false;
-	boolean trapSpike = false, trapSpikeArrow = false;
+	public boolean canTouchEvent = true;
+	public boolean trapRock = false;
+	public boolean trapSpikeArrow = false;
 	int tempMap;
 	public int nextMap;
 	int tempCol;
 	int tempRow;
-	private boolean endDialogueMap1 = false, endDialogueMap2 = false, endDialogueMap3 = false, endDialogueMap35 = false, endDialogueMap4 = false, endDialogueMap45 = false, endGriffon = false;
+	public boolean endDialogueMap1 = false, endDialogueMap2 = false, endDialogueMap3 = false, endDialogueMap35 = false, endDialogueMap4 = false, endDialogueMap45 = false, endGriffon = false;
 	
 	public EventHandler(GamePanel gp) {
 		this.gp = gp;
@@ -150,12 +150,12 @@ public class EventHandler{
 				}
 			}
 			
-			if(endDialogueMap45 == false && gp.player.worldY >= gp.tileSize * 25 && gp.player.worldY <= gp.tileSize * 26 && gp.player.worldX >= gp.tileSize*42 && gp.player.worldX <= gp.tileSize*44 && gp.currentMap == 4) {
+			if(endDialogueMap45 == false && gp.player.worldY >= gp.tileSize * 25 && gp.player.worldY <= gp.tileSize * 26 && gp.player.worldX >= gp.tileSize*41 && gp.player.worldX <= gp.tileSize*45 && gp.currentMap == 4) {
 				speak(gp.npc[4][0]);
 				endDialogueMap45 = true;
 			}
 			
-			if(gp.player.worldY <= gp.tileSize * 20 && gp.player.worldY >= gp.tileSize * 19 && gp.player.worldX >= gp.tileSize*41 && gp.player.worldX <= gp.tileSize*45 && gp.currentMap == 4) {
+			if(gp.player.worldY <= gp.tileSize * 20 && gp.player.worldY >= gp.tileSize * 19 && gp.player.worldX >= gp.tileSize*41 && gp.player.worldX <= gp.tileSize*45 && gp.currentMap == 4 && endDialogueMap45 == true) {
 				ishigamiPhase();
 			}
 			
@@ -288,5 +288,19 @@ public class EventHandler{
 			gp.gameState = gp.cutSceneState;
 			gp.csManager.sceneNum = gp.csManager.ishigami;
 		}
+	}
+
+	public void resetCounter() {
+		// TODO Auto-generated method stub
+		canTouchEvent = true;
+		trapRock = false;
+		trapSpikeArrow = false;
+		endDialogueMap1 = false;
+		endDialogueMap2 = false;
+		endDialogueMap3 = false;
+		endDialogueMap35 = false;
+		endDialogueMap4 = false;
+		endDialogueMap45 = false;
+		endGriffon = false;
 	}
 }

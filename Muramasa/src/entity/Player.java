@@ -69,6 +69,10 @@ public class Player extends Entity {
 		maxFrameAttack = 6;
 		frameDelay = 2;
 		
+		canUseSkill1 = false;
+		canUseSkill2 = false;
+		canUseSkill3 = false;
+		
 		inventory.clear();
 		getImage();
 		getAttackImage();
@@ -118,9 +122,8 @@ public class Player extends Entity {
 			}
 		}
 	
-		canUseSkill1 = false;
-		canUseSkill2 = false;
-		canUseSkill3 = false;
+		getAttack();
+		getDefenseArmor();
 		life = maxLife;
 		mana = maxMana;
 		speed = defaultSpeed;
@@ -604,35 +607,23 @@ public class Player extends Entity {
 			level++;
 			nextLevelExp *= 2;
 			maxLife += 50;
-			life += 25;
+			life += 50;
 			maxMana += 5;
-			mana += 2;
+			mana += 5;
 			strength += 5;
 			intitalDefense += 5;
 			
 			attack = getAttack();
 			defense = getDefenseArmor();
-			
-			for(int i = 0; i < gp.projectile[gp.currentMap].length; i++) {
-				if(gp.projectile[gp.currentMap][i] != null) {
-					
-					switch (gp.projectile[gp.currentMap][i].name) {
-						case "shuriken": {
-							gp.projectile[gp.currentMap][i].attack += 5;
-							gp.projectile[gp.currentMap][i].useCost = gp.player.maxMana/10;
-						}
-						case "util": {
-							gp.projectile[gp.currentMap][i].attack += 10;
-							gp.projectile[gp.currentMap][i].useCost = gp.player.maxMana/3;
-						}
-						case "meteors": {
-							gp.projectile[gp.currentMap][i].attack += 50;
-							gp.projectile[gp.currentMap][i].useCost = gp.player.maxMana/3;
-						}
-					}
-				}
+			if(canUseSkill1) {
+				projectile.attack += 10;
+				projectile.useCost  = gp.player.maxMana/10;
 			}
 			
+			if(canUseSkill2) {
+				utilProjectile.attack += 20;
+				utilProjectile.useCost  = gp.player.maxMana/3;
+			}
 			
 
 			gp.playSe(8);	

@@ -1005,12 +1005,13 @@ public class Entity {
 			}
 		}
 		
-		g2.setColor(Color.red);
-		g2.drawRect(tempScreenX + solidAreaDefaultX, tempScreenY + solidAreaDefaultY, solidArea.width, solidArea.height);
-		g2.setColor(Color.green);
-		if(image != null) {
-			g2.drawRect(tempScreenX, tempScreenY, image.getWidth(), image.getHeight());
-		}
+//		g2.setColor(Color.red);
+//		g2.drawRect(tempScreenX + solidAreaDefaultX, tempScreenY + solidAreaDefaultY, solidArea.width, solidArea.height);
+//		g2.setColor(Color.green);
+//		if(image != null) {
+//			g2.drawRect(tempScreenX, tempScreenY, image.getWidth(), image.getHeight());
+//		}
+		
 	}
 
 	protected void dyingAnimation(Graphics2D g2) {

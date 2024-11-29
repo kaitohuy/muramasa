@@ -19,6 +19,7 @@ public class NPC_Mage extends Entity{
 		numOfDirecion = 2;
 		getImage();
 		setDialogue();
+		setDefaultSolidArea(0, 0, 0, 0, 0, 0);
 	}
 	
 	public void getImage() {

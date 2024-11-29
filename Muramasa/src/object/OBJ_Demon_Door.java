@@ -65,10 +65,12 @@ public class OBJ_Demon_Door extends Entity{
 		}else {
 			int skullIndex = gp.player.searchItemInventory("skull");
 			int boneIndex = gp.player.searchItemInventory("bone");
+			
 			if(skullIndex != 999 && boneIndex != 999) {
 				down1 = image3;
 				setDefaultSolidArea(0, 0, 0, 0, 0, 0);
 				gp.player.inventory.remove(skullIndex);		
+				boneIndex = gp.player.searchItemInventory("bone");
 				gp.player.inventory.remove(boneIndex);	
 				gp.eHandler.dragonPhase();
 				

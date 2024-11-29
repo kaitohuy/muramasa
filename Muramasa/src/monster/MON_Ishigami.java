@@ -52,7 +52,6 @@ public class MON_Ishigami extends Monster{
 		if(inRage == false) {
 			getAttackImage();
 		}else {
-			System.out.println("hoho");
 			getAttackImagePhase2();
 		}
 		getImage();

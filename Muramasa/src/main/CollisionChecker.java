@@ -191,7 +191,6 @@ public class CollisionChecker {
 					if(target[gp.currentMap][i] != entity) {
 						
 						if(entity == gp.player && target[gp.currentMap][i].name.equals("ishigami") && target[gp.currentMap][i].inRage == true) {
-							System.out.println("hihi");
 							if(target[gp.currentMap][i].attacking == false) {
 								entity.collisionOn = true;
 								index.add(i);

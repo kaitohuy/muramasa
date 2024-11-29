@@ -327,7 +327,17 @@ public class CutsceneManager {
 			
 			y--;
 			drawString(1f, 38f, y, endCredit, 40);
+			if(counterReached(1800) == true) {
+				scenePhase++;
 		
+			}
+		}
+		
+		if(scenePhase == 6) {
+
+			gp.gameState = gp.titleState;
+			gp.ui.titleScreenState = 0;
+			gp.playMusic(26);
 		}
 		
 	}

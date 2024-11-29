@@ -20,7 +20,7 @@ public class OBJ_Meteors extends Projectile{
 		maxLife = 90;
 		life = maxLife;
 		if(gp.player != null) {
-			attack = 200 + (gp.player.level - 8) * 50;
+			attack = 100 + (gp.player.level - 8) * 50;
 			useCost = gp.player.maxMana / 24;
 		}else {
 			attack = 200;

@@ -33,14 +33,13 @@ public class Main {
         window.setLocationRelativeTo(null); // Center
         window.setVisible(true);
 
-        // Bắt sự kiện nhấn nút "X"
         window.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-            	if(gamepanel.currentMap >= 1) {
-            		gamepanel.gameState = gamepanel.pauseState;
-            	}
-  
+                if (gamepanel.currentMap >= 1) {
+                    gamepanel.gameState = gamepanel.pauseState;
+                }
+
                 // Hiển thị hộp thoại xác nhận
                 int confirm = JOptionPane.showConfirmDialog(
                         window,
@@ -51,13 +50,33 @@ public class Main {
 
                 // Nếu người dùng chọn "Yes", thoát chương trình
                 if (confirm == JOptionPane.YES_OPTION) {
-                	if(gamepanel.currentMap >= 1) {
-                		gamepanel.saveLoad.save();
-                	}
+                    if (gamepanel.currentMap >= 1) {
+                        gamepanel.saveLoad.save();
+                    }
                     System.exit(0);
                 }
             }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            	if (gamepanel.gameState != gamepanel.titleState) {
+            		gamepanel.gameState = gamepanel.pauseState;
+                }else {
+                	gamepanel.gameState = gamepanel.titleState;
+                }
+                
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            	if (gamepanel.currentMap >= 1) {
+            		gamepanel.gameState = gamepanel.playState;
+                }else {
+                	gamepanel.gameState = gamepanel.titleState;
+                }
+            }
         });
+
 
         gamepanel.setupGame();
         gamepanel.startGameThread();

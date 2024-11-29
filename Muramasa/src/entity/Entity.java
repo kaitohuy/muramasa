@@ -1007,13 +1007,13 @@ public class Entity {
 				g2.drawImage(image, tempScreenX, tempScreenY, null);
 			}
 		}
-		
-		g2.setColor(Color.red);
-		g2.drawRect(tempScreenX + solidAreaDefaultX, tempScreenY + solidAreaDefaultY, solidArea.width, solidArea.height);
-		g2.setColor(Color.green);
-		if(image != null) {
-			g2.drawRect(tempScreenX, tempScreenY, image.getWidth(), image.getHeight());
-		}
+//		
+//		g2.setColor(Color.red);
+//		g2.drawRect(tempScreenX + solidAreaDefaultX, tempScreenY + solidAreaDefaultY, solidArea.width, solidArea.height);
+//		g2.setColor(Color.green);
+//		if(image != null) {
+//			g2.drawRect(tempScreenX, tempScreenY, image.getWidth(), image.getHeight());
+//		}
 		
 	}
 

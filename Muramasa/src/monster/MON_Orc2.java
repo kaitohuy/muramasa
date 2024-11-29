@@ -22,9 +22,9 @@ public class MON_Orc2 extends Monster{
 		name = monName;
 		defaultSpeed = 2;
 		speed = defaultSpeed;
-		maxLife = 500;
+		maxLife = 1000;
 		life = maxLife;
-		attack = 90;
+		attack = 120;
 		defense = 5;
 		exp = 200;
 		knockBackPower = 5;

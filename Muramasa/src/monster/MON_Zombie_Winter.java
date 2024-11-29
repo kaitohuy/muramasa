@@ -19,7 +19,9 @@ public class MON_Zombie_Winter extends Monster{
 		name = monName;
 		defaultSpeed = 2;
 		speed = defaultSpeed;
-		maxLife = 1000;
+		eWidth = gp.tileSize * 7;
+		eHeight = gp.tileSize * 7;
+		maxLife = 1500;
 		life = maxLife;
 		attack = 150;
 		defense = 15;
@@ -29,21 +31,21 @@ public class MON_Zombie_Winter extends Monster{
 		maxFrameAttack = 24;
 		frameDelay = 1;
 		
-		setDefaultSolidArea(100, 96, 46, 46, 64, 48);
+		setDefaultSolidArea(144, 128, 46, 46, 90, 72);
 		getImage();
 		getAttackImage();
 	}
 	
 	public void getImage() {
 		
-		up1 = setup("/monster/zombie_winter_up_1", gp.tileSize*5, gp.tileSize*5);
-		up2 = setup("/monster/zombie_winter_up_2", gp.tileSize*5, gp.tileSize*5);
-		down1 = setup("/monster/zombie_winter_down_1", gp.tileSize*5, gp.tileSize*5);
-		down2 = setup("/monster/zombie_winter_down_2", gp.tileSize*5, gp.tileSize*5);
-		left1 = setup("/monster/zombie_winter_left_1", gp.tileSize*5, gp.tileSize*5);
-		left2 = setup("/monster/zombie_winter_left_2", gp.tileSize*5, gp.tileSize*5);
-		right1 = setup("/monster/zombie_winter_right_1", gp.tileSize*5, gp.tileSize*5);
-		right2 = setup("/monster/zombie_winter_right_2", gp.tileSize*5, gp.tileSize*5);
+		up1 = setup("/monster/zombie_winter_up_1", eWidth, eHeight);
+		up2 = setup("/monster/zombie_winter_up_2", eWidth, eHeight);
+		down1 = setup("/monster/zombie_winter_down_1", eWidth, eHeight);
+		down2 = setup("/monster/zombie_winter_down_2", eWidth, eHeight);
+		left1 = setup("/monster/zombie_winter_left_1", eWidth, eHeight);
+		left2 = setup("/monster/zombie_winter_left_2", eWidth, eHeight);
+		right1 = setup("/monster/zombie_winter_right_1", eWidth, eHeight);
+		right2 = setup("/monster/zombie_winter_right_2", eWidth, eHeight);
 		
 	}
 	
@@ -51,22 +53,22 @@ public class MON_Zombie_Winter extends Monster{
 		
 	    for (int i = 0; i < maxFrameAttack; i++) {
 	    	String tempPath = "/monster/zombie_winter_attack_up_" + i;
-	    	attackUp[i] = setup(tempPath, gp.tileSize*5, gp.tileSize*5);
+	    	attackUp[i] = setup(tempPath, eWidth, eHeight);
 	    }
 	    
 	    for (int i = 0; i < maxFrameAttack; i++) {
 	    	String tempPath = "/monster/zombie_winter_attack_down_" + i;
-	    	attackDown[i] = setup(tempPath, gp.tileSize*5, gp.tileSize*5);
+	    	attackDown[i] = setup(tempPath, eWidth, eHeight);
 	    }
 	    
 	    for (int i = 0; i < maxFrameAttack; i++) {
 	    	String tempPath = "/monster/zombie_winter_attack_left_" + i;
-	    	attackLeft[i] = setup(tempPath, gp.tileSize*5, gp.tileSize*5);
+	    	attackLeft[i] = setup(tempPath, eWidth, eHeight);
 	    }
 	    
 	    for (int i = 0; i < maxFrameAttack; i++) {
 	    	String tempPath = "/monster/zombie_winter_attack_right_" + i;
-	    	attackRight[i] = setup(tempPath, gp.tileSize*5, gp.tileSize*5);
+	    	attackRight[i] = setup(tempPath, eWidth, eHeight);
 	    }
 	}
 
@@ -91,7 +93,7 @@ public class MON_Zombie_Winter extends Monster{
 		
 		//check if attacks
 		if(attacking == false) {
-			checkAttackOrNot(30, gp.tileSize*3, gp.tileSize*3);
+			checkAttackOrNot(30, gp.tileSize*3, gp.tileSize*2);
 		}
 	}
 	

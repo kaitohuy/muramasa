@@ -247,6 +247,15 @@ public class Player extends Entity {
 	
 	public void update() {
 		
+		recoveryManaCounter++;
+		if(recoveryManaCounter >= 120) {
+			mana++;
+			recoveryManaCounter = 0;
+			if(mana > maxMana) {
+				mana = maxMana;
+			}
+		}
+		
 		if (!canAttack) {
             cooldownCounter++;
             if (cooldownCounter > attackCooldown) {
@@ -470,7 +479,10 @@ public class Player extends Entity {
 			utilAvailableCounter++;
 		}
 		
-//		
+		if(mana <= 0) {
+			mana = 0;
+		}
+		
 		if(life <= 0) {
 			gp.stopMusic();
 			gp.gameState = gp.gameOverState;
@@ -621,7 +633,7 @@ public class Player extends Entity {
 			}
 			
 			if(canUseSkill2) {
-				utilProjectile.attack += 20;
+				utilProjectile.attack += 15;
 				utilProjectile.useCost  = gp.player.maxMana/3;
 			}
 			

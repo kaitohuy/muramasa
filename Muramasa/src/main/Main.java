@@ -37,7 +37,10 @@ public class Main {
         window.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-            	gamepanel.gameState = gamepanel.pauseState;
+            	if(gamepanel.currentMap >= 1) {
+            		gamepanel.gameState = gamepanel.pauseState;
+            	}
+  
                 // Hiển thị hộp thoại xác nhận
                 int confirm = JOptionPane.showConfirmDialog(
                         window,
@@ -48,7 +51,9 @@ public class Main {
 
                 // Nếu người dùng chọn "Yes", thoát chương trình
                 if (confirm == JOptionPane.YES_OPTION) {
-                	gamepanel.saveLoad.save();
+                	if(gamepanel.currentMap >= 1) {
+                		gamepanel.saveLoad.save();
+                	}
                     System.exit(0);
                 }
             }

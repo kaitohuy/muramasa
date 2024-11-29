@@ -75,8 +75,9 @@ public class Entity {
 	public int utilAvailableCounter = 0;
 	public int dyingCounter = 0;
 	public int hpBarCounter = 0;
-	int knockBackCounter = 0;
-	int offBalanceCounter = 0;
+	public int recoveryManaCounter = 0;
+	public int knockBackCounter = 0;
+	public int offBalanceCounter = 0;
 	public int frameIndex = 0;  // Frame hiện tại trong hoạt ảnh
 	public int frameCounter = 0;  // Đếm số bước để đổi frame
 	public int frameDelay = 0;    // Khoảng thời gian giữ một frame (dựa trên FPS 60 và 8 frame)
@@ -970,7 +971,9 @@ public class Entity {
 			
 			if(gp.keyH.summonKeyPressed == true) {
 				if(canUseSkill3 == true) {
-					phoenix.draw(g2);
+					if(mana >= maxMana/3) {
+						phoenix.draw(g2);						
+					}
 				}else {
 					startDialogue(this, 3);
 					gp.keyH.summonKeyPressed = false;
@@ -1005,12 +1008,12 @@ public class Entity {
 			}
 		}
 		
-//		g2.setColor(Color.red);
-//		g2.drawRect(tempScreenX + solidAreaDefaultX, tempScreenY + solidAreaDefaultY, solidArea.width, solidArea.height);
-//		g2.setColor(Color.green);
-//		if(image != null) {
-//			g2.drawRect(tempScreenX, tempScreenY, image.getWidth(), image.getHeight());
-//		}
+		g2.setColor(Color.red);
+		g2.drawRect(tempScreenX + solidAreaDefaultX, tempScreenY + solidAreaDefaultY, solidArea.width, solidArea.height);
+		g2.setColor(Color.green);
+		if(image != null) {
+			g2.drawRect(tempScreenX, tempScreenY, image.getWidth(), image.getHeight());
+		}
 		
 	}
 

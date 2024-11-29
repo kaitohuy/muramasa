@@ -18,10 +18,10 @@ public class MON_Skeleton extends Monster{
 		name = monName;
 		defaultSpeed = 2;
 		speed = defaultSpeed;
-		maxLife = 2000;
+		maxLife = 2500;
 		life = maxLife;
-		attack = 150;
-		defense = 20;
+		attack = 180;
+		defense = 30;
 		exp = 10000;
 		
 		knockBackPower = 5;

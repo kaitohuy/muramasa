@@ -115,7 +115,8 @@ public class EventHandler{
 				endGriffon = true;
 			}
 			if(gp.player.worldY >= gp.tileSize * 10 && gp.player.worldX >= gp.tileSize * 8 && gp.player.worldX <= gp.tileSize * 11 && gp.currentMap == 0) {
-				teleport(1, 3, 32, gp.outside, "right");
+				//teleport(1, 3, 32, gp.outside, "right");
+				teleport(3, 24, 48, gp.outside, "up");
 			}
 			
 			if(gp.player.worldY > gp.tileSize*48 && gp.player.worldX >= gp.tileSize * 24 && gp.player.worldX <= gp.tileSize * 25 && gp.currentMap == 2) {

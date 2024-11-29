@@ -22,7 +22,7 @@ public class MON_Golem extends Monster{
 		name = monName;
 		defaultSpeed = 2;
 		speed = defaultSpeed;
-		maxLife = 500;
+		maxLife = 750;
 		life = maxLife;
 		attack = 100;
 		defense = 10;

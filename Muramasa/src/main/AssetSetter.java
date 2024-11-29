@@ -345,6 +345,7 @@ import object.*;
 				npcIndex = 0;
 				setUpNPC(NPC_Merchant.class, 1, 5);
 				setUpNPC(NPC_Witch.class, 14, 4);
+				setUpNPC(NPC_Griffon.class, 10, 11);
 				break;
 			}
 		}

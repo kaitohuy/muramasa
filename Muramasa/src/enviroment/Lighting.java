@@ -153,7 +153,7 @@ public class Lighting {
 		}
 		g2.setColor(Color.white);
 		g2.setFont(gp.ui.VT323.deriveFont(40f));
-		gp.ui.drawSubWindow(gp.tileSize*17 + 40, 18, gp.tileSize*2 , gp.tileSize + 12);
-		g2.drawString(situation, gp.tileSize*18, gp.tileSize + 12);
+		gp.ui.drawSubWindow(gp.tileSize*17 + 40, gp.tileSize*10 + 18, gp.tileSize*2 , gp.tileSize + 12);
+		g2.drawString(situation, gp.tileSize*18, gp.tileSize*11 + 12);
 	}
 }
